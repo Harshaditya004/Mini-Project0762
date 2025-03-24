@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mess Menu Suggestion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('fruits.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: rgba(225, 195, 195, 0.678);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 620px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input, select, textarea {
+            width: 100%;
+            height: 3.5vh;
+            padding: auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        textarea {
+            height: 80px;
+            resize: none;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        async function submitForm(event) {
+            event.preventDefault(); // Prevent page reload
+    
+            let formData = {
+                regNo: document.getElementById("regNo").value,
+                name: document.getElementById("name").value,
+                block: document.getElementById("block").value,
+                roomNo: document.getElementById("roomNo").value,
+                messName: document.getElementById("messName").value,
+                messType: document.getElementById("messType").value,
+                foodSuggestion: document.getElementById("foodSuggestion").value,
+                mealType: document.getElementById("mealType").value,
+                feasibility: document.getElementById("feasibility").value
+            };
+    
+            let response = await fetch("http://localhost:5000/submit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            });
+    
+            let result = await response.json();
+            alert(result.message);
+        }
+    </script>
+    
+    <form onsubmit="submitForm(event)">
+    
+</head>
+<body>
+    <div class="container">
+        <h2 style="text-align: center;">Mess Menu Suggestion</h2>
+        <form onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="regNo">Reg No:</label>
+                <input type="text" id="regNo" name="regNo" required>
+            </div>
+            <div class="form-group">
+                <label for="name">Student Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="block">Block:</label>
+                <input type="text" id="block" name="block" required>
+            </div>
+            <div class="form-group">
+                <label for="roomNo">Room Number:</label>
+                <input type="text" id="roomNo" name="roomNo" required>
+            </div>
+            <div class="form-group">
+                <label for="messName">Mess Name:</label>
+                <input type="text" id="messName" name="messName" required>
+            </div>
+            <div class="form-group">
+                <label for="messType">Mess Type:</label>
+                <select id="messType" name="messType" required>
+                    <option value="Veg">Veg</option>
+                    <option value="Non-Veg">Non-Veg</option>
+                    <option value="Special">Special</option>
+                    <option value="Night Mess">Night Mess</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="foodSuggestion">Food Suggestion:</label>
+                <textarea id="foodSuggestion" name="foodSuggestion" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="mealType">Meal Type:</label>
+                <select id="mealType" name="mealType" required>
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Lunch">Lunch</option>
+                    <option value="Snacks">Snacks</option>
+                    <option value="Dinner">Dinner</option>
+                    <option value="Night Mess">Night Mess</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="inclusionSnacks">Requested Snacks and Day of Serving:</label>
+                <input type="text" id="inclusionSnacks" name="inclusionSnacks" required>
+                <select id="snackDate" name="snackDate" required>
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
+                    <option value="Sunday">Sunday</option>
+                </select>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
+
