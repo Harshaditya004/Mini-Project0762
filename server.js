@@ -1,22 +1,17 @@
 const express = require("express");
-const mysql = require("mysql");
+const mysql = require("mysql2");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const path = require("path");
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
-app.use(express.static(path.join(__dirname, "public")));
-
-
 const db = mysql.createConnection({
     host: "localhost",
-    user: "root",  
-    password: "Harshaditya16",  
+    user: "root",
+    password: "Harshaditya16",
     database: "mess_menu_db"
 });
 
@@ -26,10 +21,6 @@ db.connect(err => {
     } else {
         console.log("Connected to MySQL Database");
     }
-});
-
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "projekt.html"));
 });
 
 app.post("/submit", (req, res) => {
@@ -49,4 +40,8 @@ app.post("/submit", (req, res) => {
 const PORT = 5000;
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
+});
+
+app.get("/", (req, res) => {
+    res.send("Welcome to the Mess Menu API");
 });
